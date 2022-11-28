@@ -27,9 +27,10 @@ public class EmployerController {
 
     @PostMapping("/saveEmployer")
     public ResponseEntity<String> saveEmployer(@RequestBody Employer employer) {
-        if (this.employerService.saveEmployer(employer)) {
-            return ResponseEntity.ok(this.employerService.getEmployerMessage(employer));
+
+        if (this.employerService.saveEmployer(employer).isSuccess()) {
+            return ResponseEntity.ok(this.employerService.saveEmployer(employer).getMessage());
         }
-        return ResponseEntity.badRequest().body(this.employerService.getEmployerMessage(employer));
+        return ResponseEntity.badRequest().body(this.employerService.saveEmployer(employer).getMessage());
     }
 }

@@ -27,10 +27,11 @@ public class CandidateController {
 
     @PostMapping("/saveCandidate")
     public ResponseEntity<String> saveCandidate(@RequestBody Candidate candidate) throws Exception {
-        if (this.candidateService.saveCandidate(candidate)) {
-            return ResponseEntity.ok(this.candidateService.getCandidateMessage(candidate));
+
+        if (this.candidateService.saveCandidate(candidate).isSuccess()) {
+            return ResponseEntity.ok(this.candidateService.saveCandidate(candidate).getMessage());
         }
-        return ResponseEntity.badRequest().body(this.candidateService.getCandidateMessage(candidate));
+        return ResponseEntity.badRequest().body(this.candidateService.saveCandidate(candidate).getMessage());
     }
 
 }
