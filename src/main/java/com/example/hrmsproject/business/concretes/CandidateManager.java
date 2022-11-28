@@ -3,6 +3,10 @@ package com.example.hrmsproject.business.concretes;
 import com.example.hrmsproject.business.abstracts.CandidateService;
 import com.example.hrmsproject.business.abstracts.CandidateVerificationCodeService;
 import com.example.hrmsproject.business.concretes.mernis.DWRKPSPublicSoap;
+import com.example.hrmsproject.core.ErrorDataResult;
+import com.example.hrmsproject.core.ErrorResult;
+import com.example.hrmsproject.core.Result;
+import com.example.hrmsproject.core.SuccessResult;
 import com.example.hrmsproject.dataAccess.abstracts.CandidateDao;
 import com.example.hrmsproject.entities.concretes.Candidate;
 import com.example.hrmsproject.entities.concretes.CandidateVerificatonCode;
@@ -37,54 +41,51 @@ public class CandidateManager implements CandidateService {
     }
 
     @Override
-    public boolean saveCandidate(Candidate candidate) throws Exception {
-        return getCandidateMessage(candidate).equals(returnVerification(Verification.Success));
-    }
-
-    @Override
-    public String getCandidateMessage(Candidate candidate) throws Exception {
+    public Result saveCandidate(Candidate candidate) throws Exception {
+        if (checkTheIdentityInUse(candidate).isSuccess()) {
+            this.candidateDao.save(candidate);
+        }
         return checkTheEmailInUse(candidate);
     }
 
-    private String checkIdentity(Candidate candidate) throws Exception {
+    private Result checkTheIdentity(Candidate candidate) throws Exception {
         DWRKPSPublicSoap client = new DWRKPSPublicSoap();
         boolean checkTheCandidate = client.TCKimlikNoDogrula(Long.valueOf(candidate.getIdentificationCode()), candidate.getFirstName(), candidate.getLastName(), candidate.getBirthDate());
         if (!checkTheCandidate) {
-
-            return returnVerification(Verification.CheckTheIdentity);
+            return new ErrorResult(returnVerification(Verification.CheckTheIdentity));
         }
-        return checkTheVerificationCode(candidate).equals(returnVerification(Verification.Success)) ? returnVerification(Verification.Success) : checkTheVerificationCode(candidate);
+        return checkTheVerificationCode(candidate);
     }
 
-    private String checkTheEmailInUse(Candidate candidate) throws Exception {
+    private Result checkTheEmailInUse(Candidate candidate) throws Exception {
         final List<Candidate> candidateList = getCandidateList();
         ArrayList emailList = new ArrayList();
         candidateList.stream().forEach(candidates -> emailList.add(candidates.getEmail()));
         for (Object email : emailList) {
             if (email.equals(candidate.getEmail())) {
-                return returnVerification(Verification.EmailInUse);
+                return new ErrorResult(returnVerification(Verification.EmailInUse));
             }
         }
-        return checkTheIdentityInUse(candidate).equals(returnVerification(Verification.Success)) ? returnVerification(Verification.Success) : checkTheIdentityInUse(candidate);
+        return checkTheIdentityInUse(candidate);
     }
 
-    private String checkTheIdentityInUse(Candidate candidate) throws Exception {
+    private Result checkTheIdentityInUse(Candidate candidate) throws Exception {
         final List<Candidate> candidateList = getCandidateList();
         ArrayList identityList = new ArrayList();
         candidateList.stream().forEach(candidates -> identityList.add(candidates.getEmail()));
         for (Object email : identityList) {
             if (email.equals(candidate.getIdentificationCode())) {
-                return returnVerification(Verification.IdentityInUse);
+                return new ErrorResult(returnVerification(Verification.IdentityInUse));
             }
         }
-        return checkIdentity(candidate).equals(returnVerification(Verification.Success)) ? returnVerification(Verification.Success) : checkIdentity(candidate);
+        return checkTheIdentity(candidate);
     }
 
-    private String checkTheVerificationCode(Candidate candidate) {
+    private Result checkTheVerificationCode(Candidate candidate) {
         if(!this.candidateVerificatonCodeService.getVerificationCode(candidate.getId()).isVerified()){
-            return returnVerification(Verification.VerificationCode);
+            return new ErrorResult(returnVerification(Verification.VerificationCode));
         }
-        return returnVerification(Verification.Success);
+        return new SuccessResult(returnVerification(Verification.Success));
 
     }
 

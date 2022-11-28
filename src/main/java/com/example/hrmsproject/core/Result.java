@@ -13,4 +13,12 @@ public class Result {
         this(success);
         this.message = message;
     }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }
