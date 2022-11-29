@@ -1,9 +1,7 @@
 package com.example.hrmsproject.entities.concretes;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "employers")
@@ -19,13 +17,17 @@ public class Employer extends User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @OneToMany(mappedBy = "employerId")
+    private List<JobAdvertisement> jobAdvertisements;
+
     public Employer() {}
 
-    public Employer(int id, String email, String password, String companyName, String webSite, String phoneNumber) {
+    public Employer(int id, String email, String password, String companyName, String webSite, String phoneNumber, List<JobAdvertisement> jobAdvertisements) {
         super(id, email, password);
         this.companyName = companyName;
         this.webSite = webSite;
         this.phoneNumber = phoneNumber;
+        this.jobAdvertisements = jobAdvertisements;
     }
 
     public String getCompanyName() {
@@ -50,5 +52,13 @@ public class Employer extends User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<JobAdvertisement> getJobAdvertisements() {
+        return jobAdvertisements;
+    }
+
+    public void setJobAdvertisements(List<JobAdvertisement> jobAdvertisements) {
+        this.jobAdvertisements = jobAdvertisements;
     }
 }
