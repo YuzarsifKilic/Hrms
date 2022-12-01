@@ -1,5 +1,7 @@
 package com.example.hrmsproject.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,6 +9,8 @@ import java.util.List;
 @Table(name = "employers")
 
 @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertisements"})
 
 public class Employer extends User {
 
@@ -17,7 +21,7 @@ public class Employer extends User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "employerId")
+    @OneToMany(mappedBy = "employerId", fetch = FetchType.LAZY)
     private List<JobAdvertisement> jobAdvertisements;
 
     public Employer() {}

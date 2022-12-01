@@ -1,6 +1,8 @@
-package com.example.hrmsproject.core;
+package com.example.hrmsproject.core.results;
 
-public class SuccessDataResult<T> extends DataResult<T>{
+import com.example.hrmsproject.core.results.DataResult;
+
+public class SuccessDataResult<T> extends DataResult<T> {
 
     public SuccessDataResult(T data, String message) {
         super(data, true, message);

@@ -1,5 +1,7 @@
 package com.example.hrmsproject.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -21,7 +23,7 @@ public class JobAdvertisement {
     @Column(name = "advertisement_deadline")
     private int advertisementDeadline;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "city_id", referencedColumnName = "city_id")
     private City city;
 

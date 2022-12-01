@@ -1,4 +1,4 @@
-package com.example.hrmsproject.core;
+package com.example.hrmsproject.core.results;
 
 public class Result {
 

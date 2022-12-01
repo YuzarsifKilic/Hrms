@@ -1,4 +1,6 @@
-package com.example.hrmsproject.core;
+package com.example.hrmsproject.core.results;
+
+import com.example.hrmsproject.core.results.DataResult;
 
 public class ErrorDataResult<T> extends DataResult<T> {
 

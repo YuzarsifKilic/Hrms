@@ -1,19 +1,21 @@
 package com.example.hrmsproject.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "cities")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertisements"})
 public class City {
 
     @Id
-    @GeneratedValue
     @Column(name = "city_id")
     private int cityId;
     @Column(name = "city_name")
     private String cityName;
-    @OneToMany(mappedBy = "city")
+    @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
     private List<JobAdvertisement> jobAdvertisements;
 
     public City() {}

@@ -3,13 +3,11 @@ package com.example.hrmsproject.business.concretes;
 import com.example.hrmsproject.business.abstracts.CandidateService;
 import com.example.hrmsproject.business.abstracts.CandidateVerificationCodeService;
 import com.example.hrmsproject.business.concretes.mernis.DWRKPSPublicSoap;
-import com.example.hrmsproject.core.ErrorDataResult;
-import com.example.hrmsproject.core.ErrorResult;
-import com.example.hrmsproject.core.Result;
-import com.example.hrmsproject.core.SuccessResult;
+import com.example.hrmsproject.core.results.ErrorResult;
+import com.example.hrmsproject.core.results.Result;
+import com.example.hrmsproject.core.results.SuccessResult;
 import com.example.hrmsproject.dataAccess.abstracts.CandidateDao;
 import com.example.hrmsproject.entities.concretes.Candidate;
-import com.example.hrmsproject.entities.concretes.CandidateVerificatonCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

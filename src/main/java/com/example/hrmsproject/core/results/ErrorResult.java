@@ -1,6 +1,4 @@
-package com.example.hrmsproject.core;
-
-import com.example.hrmsproject.entities.concretes.User;
+package com.example.hrmsproject.core.results;
 
 public class ErrorResult extends Result {
 
