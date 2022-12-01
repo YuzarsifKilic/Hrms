@@ -21,7 +21,7 @@ public class Employer extends User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "employerId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "employer", fetch = FetchType.LAZY)
     private List<JobAdvertisement> jobAdvertisements;
 
     public Employer() {}

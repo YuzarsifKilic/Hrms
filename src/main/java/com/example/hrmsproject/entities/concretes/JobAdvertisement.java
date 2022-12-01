@@ -33,11 +33,11 @@ public class JobAdvertisement {
 
     @ManyToOne
     @JoinColumn(name = "employer_id")
-    private Employer employerId;
+    private Employer employer;
 
     public JobAdvertisement() {}
 
-    public JobAdvertisement(int id, String jobDefinition, int salaryMin, int salaryMax, int positionCount, int advertisementDeadline, City city, JobTitle jobTitle, Employer employerId) {
+    public JobAdvertisement(int id, String jobDefinition, int salaryMin, int salaryMax, int positionCount, int advertisementDeadline, City city, JobTitle jobTitle, Employer employer) {
         this.id = id;
         this.jobDefinition = jobDefinition;
         this.salaryMin = salaryMin;
@@ -46,7 +46,7 @@ public class JobAdvertisement {
         this.advertisementDeadline = advertisementDeadline;
         this.city = city;
         this.jobTitle = jobTitle;
-        this.employerId = employerId;
+        this.employer = employer;
     }
 
     public int getId() {
@@ -114,10 +114,10 @@ public class JobAdvertisement {
     }
 
     public Employer getEmployerId() {
-        return employerId;
+        return employer;
     }
 
     public void setEmployerId(Employer employerId) {
-        this.employerId = employerId;
+        this.employer = employerId;
     }
 }
