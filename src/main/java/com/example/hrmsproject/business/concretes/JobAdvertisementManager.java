@@ -7,7 +7,7 @@ import com.example.hrmsproject.core.results.SuccessDataResult;
 import com.example.hrmsproject.core.results.SuccessResult;
 import com.example.hrmsproject.dataAccess.abstracts.JobAdvertisementDao;
 import com.example.hrmsproject.entities.concretes.JobAdvertisement;
-import com.example.hrmsproject.entities.concretes.dto.JobAdvertisementWtihEmployerDto;
+import com.example.hrmsproject.entities.concretes.dto.JobAdvertisementWithEmployerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,20 +37,28 @@ public class JobAdvertisementManager implements JobAdvertisementService {
     }
 
     @Override
-    public DataResult<List<JobAdvertisementWtihEmployerDto>> getWithEmployerDetails() {
-        return new SuccessDataResult<List<JobAdvertisementWtihEmployerDto>>(this.jobAdvertisementDao.getJobAdvertisementWithEmployerDetails());
+    public DataResult<List<JobAdvertisementWithEmployerDto>> getWithEmployerDetails() {
+        return new SuccessDataResult<List<JobAdvertisementWithEmployerDto>>(this.jobAdvertisementDao.getJobAdvertisementWithEmployerDetails());
     }
 
     @Override
-    public DataResult<List<JobAdvertisementWtihEmployerDto>> getActiveJobAdvertisementDetails() {
-        Calendar calendar = Calendar.getInstance();
-        ArrayList<JobAdvertisementWtihEmployerDto> jobAdvertisementWtihEmployerDtos = new ArrayList<>();
-        for (JobAdvertisementWtihEmployerDto jobAdvertisementWithEmployerDto:
-                this.jobAdvertisementDao.getJobAdvertisementWithEmployerDetails()) {
-            if (jobAdvertisementWithEmployerDto.getAdvertisementDeadline() >= calendar.get(Calendar.YEAR)) {
-                jobAdvertisementWtihEmployerDtos.add(jobAdvertisementWithEmployerDto);
-            }
-        }
-        return new SuccessDataResult<List<JobAdvertisementWtihEmployerDto>>(jobAdvertisementWtihEmployerDtos);
+    public DataResult<List<JobAdvertisementWithEmployerDto>> getJobAdvertisementByIsActive() {
+        return new SuccessDataResult<List<JobAdvertisementWithEmployerDto>>(this.jobAdvertisementDao.getJobAdvertisementByActive(true));
+    }
+
+    @Override
+    public DataResult<List<JobAdvertisementWithEmployerDto>> getJobAdvertisementByIsActiveOrderByDeadline() {
+        return new SuccessDataResult<List<JobAdvertisementWithEmployerDto>>(this.jobAdvertisementDao.getJobAdvertisementByActiveOrderByDeadline(true));
+    }
+
+    @Override
+    public DataResult<List<JobAdvertisementWithEmployerDto>> getJobAdvertisementByEmployerId(int employerId) {
+        return new SuccessDataResult<List<JobAdvertisementWithEmployerDto>>(this.jobAdvertisementDao.getByEmployerId(true, employerId));
+    }
+
+    @Override
+    public Result deleteJobAdvertisementById(int id) {
+        this.jobAdvertisementDao.deleteById(id);
+        return new SuccessResult("Başarıyla Silindi");
     }
 }

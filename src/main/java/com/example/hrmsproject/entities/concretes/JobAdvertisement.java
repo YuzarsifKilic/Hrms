@@ -1,7 +1,5 @@
 package com.example.hrmsproject.entities.concretes;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 
 @Entity
@@ -23,6 +21,9 @@ public class JobAdvertisement {
     @Column(name = "advertisement_deadline")
     private int advertisementDeadline;
 
+    @Column(name = "is_active")
+    private boolean isActive;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "city_id", referencedColumnName = "city_id")
     private City city;
@@ -37,13 +38,14 @@ public class JobAdvertisement {
 
     public JobAdvertisement() {}
 
-    public JobAdvertisement(int id, String jobDefinition, int salaryMin, int salaryMax, int positionCount, int advertisementDeadline, City city, JobTitle jobTitle, Employer employer) {
+    public JobAdvertisement(int id, String jobDefinition, int salaryMin, int salaryMax, int positionCount, int advertisementDeadline, boolean isActive, City city, JobTitle jobTitle, Employer employer) {
         this.id = id;
         this.jobDefinition = jobDefinition;
         this.salaryMin = salaryMin;
         this.salaryMax = salaryMax;
         this.positionCount = positionCount;
         this.advertisementDeadline = advertisementDeadline;
+        this.isActive = isActive;
         this.city = city;
         this.jobTitle = jobTitle;
         this.employer = employer;
@@ -119,5 +121,29 @@ public class JobAdvertisement {
 
     public void setEmployerId(Employer employerId) {
         this.employer = employerId;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
     }
 }

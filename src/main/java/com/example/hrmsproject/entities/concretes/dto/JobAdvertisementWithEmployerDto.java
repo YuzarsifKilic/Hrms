@@ -1,6 +1,6 @@
 package com.example.hrmsproject.entities.concretes.dto;
 
-public class JobAdvertisementWtihEmployerDto {
+public class JobAdvertisementWithEmployerDto {
 
     private int id;
     private String jobDefinition;
@@ -8,23 +8,25 @@ public class JobAdvertisementWtihEmployerDto {
     private int salaryMax;
     private int positionCount;
     private int advertisementDeadline;
+    private boolean isActive;
     private String companyName;
 
     private String cityName;
 
     private String jobTitle;
 
-    public JobAdvertisementWtihEmployerDto(String jobTitle) {
+    public JobAdvertisementWithEmployerDto(String jobTitle) {
         this.jobTitle = jobTitle;
     }
 
-    public JobAdvertisementWtihEmployerDto(int id, String jobDefinition, int salaryMin, int salaryMax, int positionCount, int advertisementDeadline, String companyName, String cityName, String jobTitle) {
+    public JobAdvertisementWithEmployerDto(int id, String jobDefinition, int salaryMin, int salaryMax, int positionCount, int advertisementDeadline, boolean isActive, String companyName, String cityName, String jobTitle) {
         this.id = id;
         this.jobDefinition = jobDefinition;
         this.salaryMin = salaryMin;
         this.salaryMax = salaryMax;
         this.positionCount = positionCount;
         this.advertisementDeadline = advertisementDeadline;
+        this.isActive = isActive;
         this.companyName = companyName;
         this.cityName = cityName;
         this.jobTitle = jobTitle;
@@ -100,5 +102,13 @@ public class JobAdvertisementWtihEmployerDto {
 
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

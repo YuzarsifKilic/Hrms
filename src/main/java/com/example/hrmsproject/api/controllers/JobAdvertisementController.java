@@ -3,9 +3,8 @@ package com.example.hrmsproject.api.controllers;
 import com.example.hrmsproject.business.abstracts.JobAdvertisementService;
 import com.example.hrmsproject.core.results.DataResult;
 import com.example.hrmsproject.core.results.Result;
-import com.example.hrmsproject.entities.concretes.Employer;
 import com.example.hrmsproject.entities.concretes.JobAdvertisement;
-import com.example.hrmsproject.entities.concretes.dto.JobAdvertisementWtihEmployerDto;
+import com.example.hrmsproject.entities.concretes.dto.JobAdvertisementWithEmployerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,13 +32,27 @@ public class JobAdvertisementController {
     }
 
     @GetMapping("/getWithDetails")
-    public DataResult<List<JobAdvertisementWtihEmployerDto>> getWithDetail() {
+    public DataResult<List<JobAdvertisementWithEmployerDto>> getWithDetail() {
         return this.jobAdvertisementService.getWithEmployerDetails();
     }
 
-    @GetMapping("/getWithActiveJobAdvertisement")
-    public DataResult<List<JobAdvertisementWtihEmployerDto>> getWithActiveJobAdvertisement() {
-        return this.jobAdvertisementService.getActiveJobAdvertisementDetails();
+    @GetMapping("/getActiveJobAdvertisement")
+    public DataResult<List<JobAdvertisementWithEmployerDto>> getWithActiveJobAdvertisement() {
+        return this.jobAdvertisementService.getJobAdvertisementByIsActive();
     }
 
+    @GetMapping("/getActiveJobAdvertisementOrderByDeadline")
+    public DataResult<List<JobAdvertisementWithEmployerDto>> getJobAdvertisementByActiveOrderByDeadline() {
+        return this.jobAdvertisementService.getJobAdvertisementByIsActiveOrderByDeadline();
+    }
+
+    @GetMapping("/getActiveJobAdvertisementByEmployerId")
+    public DataResult<List<JobAdvertisementWithEmployerDto>> getJobAdvertisementByActiveByEmployerId(@RequestBody int employerId) {
+        return this.jobAdvertisementService.getJobAdvertisementByEmployerId(employerId);
+    }
+
+    @GetMapping("/deleteJobAdvertisementById")
+    public Result deleteJobAdvertisementById() {
+        return this.jobAdvertisementService.deleteJobAdvertisementById(1);
+    }
 }
