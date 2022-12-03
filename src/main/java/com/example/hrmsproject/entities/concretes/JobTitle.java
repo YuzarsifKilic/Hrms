@@ -21,12 +21,20 @@ public class JobTitle {
     @OneToMany(mappedBy = "jobTitle", fetch = FetchType.LAZY)
     private List<JobAdvertisement> jobAdvertisements;
 
+     @OneToMany(mappedBy = "experienceJobTitle", fetch = FetchType.LAZY)
+    private List<Experience> experiences;
+
     public JobTitle() {}
 
     public JobTitle(int id, String jobTitle, List<JobAdvertisement> jobAdvertisements) {
         this.id = id;
         this.jobTitle = jobTitle;
         this.jobAdvertisements = jobAdvertisements;
+    }
+
+    public JobTitle(String jobTitle, List<Experience> experiences) {
+        this.jobTitle = jobTitle;
+        this.experiences = experiences;
     }
 
     public int getId() {
@@ -51,5 +59,13 @@ public class JobTitle {
 
     public void setJobAdvertisements(List<JobAdvertisement> jobAdvertisements) {
         this.jobAdvertisements = jobAdvertisements;
+    }
+
+    public List<Experience> getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(List<Experience> experiences) {
+        this.experiences = experiences;
     }
 }
